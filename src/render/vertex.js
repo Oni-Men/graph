@@ -5,7 +5,7 @@ export default function renderVertex(g, vertex) {
 	vertex.edges.forEach((edge) => {
 		renderEdge(g, edge);
 	});
-	g.translate(vertex.renderLocation.x, vertex.renderLocation.y);
+	g.translate(Math.floor(vertex.renderLocation.x), Math.floor(vertex.renderLocation.y));
 	g.fillStyle = "#ccc";
 	g.lineWdith = 1.0;
 
@@ -24,7 +24,7 @@ export default function renderVertex(g, vertex) {
 	g.fill();
 	g.stroke();
 	g.font = "bold 4px sans";
-	g.fillStyle = "#fff";
-	g.fillText(vertex.name, 10, 10);
+	//g.fillStyle = "#fff";
+	//g.fillText(vertex.name, 10, 10);
 	g.restore();
 }
