@@ -45,7 +45,7 @@ export default class Graph {
 			const vertex = this.add(`v${count}`, { x: vpos.x * 10, y: vpos.y * 10 });
 			count++;
 			if (v !== null) {
-				v.link(vertex);
+				v.link(vertex, Math.hypot(vpos.x - pos.x, vpos.y - pos.y));
 			}
 			if (vpos.x == 1 && vpos.y == 1) {
 				this.startVertex = vertex;
