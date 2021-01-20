@@ -6,17 +6,8 @@ export default function renderVertex(g, vertex) {
 		renderEdge(g, edge);
 	});
 	g.translate(Math.floor(vertex.renderLocation.x), Math.floor(vertex.renderLocation.y));
-	g.fillStyle = "#ccc";
+	g.fillStyle = vertex.color;
 	g.lineWdith = 1.0;
-
-	g.strokeStyle = "#333";
-	g.beginPath();
-	g.moveTo(5, 5);
-	for (let i = 0; i < vertex.route.length; i++) {
-		const p = vertex.route[i];
-		g.lineTo(-vertex.renderLocation.x + p.x + 5, -vertex.renderLocation.y + p.y + 5);
-	}
-	g.stroke();
 
 	g.strokeStyle = "#666";
 	g.beginPath();
