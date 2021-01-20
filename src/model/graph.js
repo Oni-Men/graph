@@ -1,4 +1,4 @@
-import Vertex from "./vertex";
+import Vertex, { Color } from "./vertex";
 
 export const Direction = {
 	TOP: { x: 0, y: -1, type: "top" },
@@ -10,6 +10,8 @@ export const Direction = {
 export default class Graph {
 	constructor(labyrinth) {
 		this.vertices = [];
+		this.startVertex = null;
+		this.endVertex = null;
 		if (labyrinth !== undefined) {
 			this.fromLabyrinth(labyrinth);
 		}
@@ -45,6 +47,14 @@ export default class Graph {
 			if (v !== null) {
 				v.link(vertex);
 			}
+			if (vpos.x == 1 && vpos.y == 1) {
+				this.startVertex = vertex;
+				this.startVertex.name = "start";
+			}
+			if (vpos.x == labyrinth.width -2 && vpos.y == labyrinth.height -2) {
+				this.endVertex = vertex;
+				this.endVertex.name = "end";
+			}
 			if (path <= 1) {
 				return;
 			}
@@ -57,7 +67,6 @@ export default class Graph {
 			loop({ ...vpos }, { ...Direction.RIGHT }, vertex);
 		};
 
-		//const startVertex = this.add("s", { x: 10, y: 10 });
 		loop({ x: 1, y: 1 }, { ...Direction.RIGHT }, null);
 		loop({ x: 1, y: 1 }, { ...Direction.BOTTOM }, null);
 	}
