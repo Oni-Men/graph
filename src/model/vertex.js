@@ -15,8 +15,8 @@ export default class Vertex {
 		this.route = [];
 	}
 
-	link(other) {
-		this.edges.push(new Edge(this, other));
+	link(other, weight) {
+		this.edges.push(new Edge(this, other, weight));
 	}
 
 	visit() {		
