@@ -1,4 +1,5 @@
-import Vertex, { Color } from "./vertex";
+import PriorityQueue from "../util/priority_queue";
+import Vertex from "./vertex";
 
 export const Direction = {
 	TOP: { x: 0, y: -1, type: "top" },
@@ -69,6 +70,41 @@ export default class Graph {
 
 		loop({ x: 1, y: 1 }, { ...Direction.RIGHT }, null);
 		loop({ x: 1, y: 1 }, { ...Direction.BOTTOM }, null);
+	}
+
+	resolve() {
+		if (this.startVertex === null || this.endVertex === null) {
+			return;
+		}
+
+		const visited = new Set();
+		const allRoutes = new Map();
+
+		const  queue = new PriorityQueue();
+
+		for (const v of this.vertices) {
+			route.set(v, {distance: Number.MAX_VALUE});
+		}
+		route.set(start, {distance: 0});
+
+		let current = null;
+		while (!queue.isEmpty()) {
+			const current = queue.pop();
+
+			if (current.weight > allRoutes.get(current)) {
+				continue;
+			}
+
+			for (const e of current.edges) {
+				const length = allRoutes.get(current) + e.weight
+				if (length < allRoutes.get(e.vertTo)) {
+					
+					allRoutes.set(e.vertTo, {distance: length});
+					routes.set(current, e.vertTo);
+				}
+			}
+		}
+		
 	}
 
 	size() {
