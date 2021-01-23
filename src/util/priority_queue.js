@@ -35,6 +35,10 @@ export default class PriorityQueue {
         return v;
     }
 
+    isEmpty() {
+        return this.q.length == 0;
+    }
+
 }
 
 export class Node {
