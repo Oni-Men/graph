@@ -1,51 +1,69 @@
 export default class PriorityQueue {
-    constructor() {
-        this.q = [];
-    }
+	constructor() {
+		this.q = [];
+	}
 
-    push (v) {
-        const n = this.q.length;
-        this.q.push(v);
+	push(priority, value) {
+		let currendIndex = this.q.length;
+		this.q.push({ priority, value });
 
-        while (n != 0) {
-            const i = (n - 1) / 2;
-            if (this.q[n] < this.q[i]) {
-                this.q[n], this.q[i] = this.q[i], this.q[n];
-            }
-            n = i;
-        }
-    }
+		while (currendIndex != 0) {
+			const parentIndex = Math.floor((currendIndex - 1) / 2);
+			//最小ヒープなので、親の優先度と比較し小さい場合は入れ替える
+			if (this.q[currendIndex].priority < this.q[parentIndex].priority) {
+				this.swap(currendIndex, parentIndex);
+			}
+			currendIndex = parentIndex;
+		}
+	}
 
-    pop() {
-        const n  = this.q.length - 1;
-        this.q[0] = this.q[n];
+	pop() {
+		const popped = this.q[0];
+		this.q[0] = this.q[this.q.length - 1];
+		this.q.pop();
 
-        const v = this.q.pop();
+		//最小ヒープ構造を維持するように調整
+		this.heapify(0);
 
-        for (let i = 0, j = 0; (j = 2 * i  + 1) < n;) {
-            if ((j != n - 1) && (this.q[j] < this.q[j + 1])) {
-                j++;
-            }
-            if (this.q[i] < this.q[j]) {
-                this.q[j], this.q[i] = this.q[i], this.q[j];
-            }
-            i = j;
-        }
+		return popped === undefined ? null : popped.value;
+	}
 
-        return v;
-    }
+	heapify(parent) {
+		const left = parent * 2 + 1;
+		const right = parent * 2 + 2;
+		const length = this.q.length - 1;
+		let smallest = parent;
 
-    isEmpty() {
-        return this.q.length == 0;
-    }
+		if (left <= length && this.q[parent].priority > this.q[left].priority) {
+			smallest = left;
+		}
 
+		if (right <= length && this.q[smallest].priority > this.q[right].priority) {
+			smallest = right;
+		}
+
+		if (smallest != parent) {
+			this.swap(parent, smallest);
+			this.heapify(smallest);
+		}
+	}
+
+	swap(a, b) {
+		const tmp = this.q[a];
+		this.q[a] = this.q[b];
+		this.q[b] = tmp;
+	}
+
+	isEmpty() {
+		return this.q.length == 0;
+	}
 }
 
 export class Node {
-    constructor(value) {
-        this.value = value;
-        this.amount = 1;
-        this.left = null;
-        this.right = null;
-    }
+	constructor(value) {
+		this.value = value;
+		this.amount = 1;
+		this.left = null;
+		this.right = null;
+	}
 }
