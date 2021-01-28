@@ -9,10 +9,10 @@ test("Test PriorityQueue Push and Pop", () => {
 	queue.push(1, "one");
 	queue.push(2, "two");
 
-	expect(queue.pop()).toBe("one");
-	expect(queue.pop()).toBe("two");
-	expect(queue.pop()).toBe("three");
-	expect(queue.pop()).toBe("four");
-	expect(queue.pop()).toBe("five");
+	expect(queue.pop().value).toBe("one");
+	expect(queue.pop().value).toBe("two");
+	expect(queue.pop().value).toBe("three");
+	expect(queue.pop().value).toBe("four");
+	expect(queue.pop().value).toBe("five");
 	expect(queue.pop()).toBeNull();
 });

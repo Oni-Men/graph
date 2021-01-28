@@ -25,7 +25,7 @@ export default class PriorityQueue {
 		//最小ヒープ構造を維持するように調整
 		this.heapify(0);
 
-		return popped === undefined ? null : popped.value;
+		return popped === undefined ? null : popped;
 	}
 
 	heapify(parent) {
