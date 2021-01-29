@@ -52,7 +52,7 @@ export default class Graph {
 				this.startVertex = vertex;
 				this.startVertex.name = "start";
 			}
-			if (vpos.x == labyrinth.width -2 && vpos.y == labyrinth.height -2) {
+			if (vpos.x == labyrinth.width - 2 && vpos.y == labyrinth.height - 2) {
 				this.endVertex = vertex;
 				this.endVertex.name = "end";
 			}
@@ -73,38 +73,36 @@ export default class Graph {
 	}
 
 	resolve() {
-		if (this.startVertex === null || this.endVertex === null) {
-			return;
+		const queue = new PriorityQueue();
+
+		const dist = Array(this.vertices.length);
+		const pred = Array(this.vertices.length);
+
+		dist.fill(Number.MAX_VALUE);
+		pred.fill(-1);
+
+		dist[0] = 0;
+
+		for (let i = 0; i < this.vertices.length; i++) {
+			queue.push(dist[i], i);
 		}
 
-		const visited = new Set();
-		const allRoutes = new Map();
-
-		const  queue = new PriorityQueue();
-
-		for (const v of this.vertices) {
-			route.set(v, {distance: Number.MAX_VALUE});
-		}
-		route.set(start, {distance: 0});
-
-		let current = null;
 		while (!queue.isEmpty()) {
-			const current = queue.pop();
-
-			if (current.weight > allRoutes.get(current)) {
-				continue;
-			}
-
-			for (const e of current.edges) {
-				const length = allRoutes.get(current) + e.weight
-				if (length < allRoutes.get(e.vertTo)) {
-					
-					allRoutes.set(e.vertTo, {distance: length});
-					routes.set(current, e.vertTo);
+			const u = queue.pop().value;
+			for (const edge of this.vertices[u].edges) {
+				const v = edge.vertTo;
+				const w = edge.weight;
+				const newLen = dist[u] + w;
+				if (newLen < dist[v]) {
+					dist[v] = newLen;
+					pred[v] = u;
 				}
 			}
 		}
-		
+
+		for (let i = 0; i < pred.length; i++) {
+			console.log(pred[i]);
+		}
 	}
 
 	size() {
